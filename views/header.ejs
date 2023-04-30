@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>To Do List</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script type='text/javascript'>
+    (() => {
+        if(window.localStorage) {
+            if (!localStorage.getItem('reload')) {
+                localStorage['reload'] = true;
+                window.location.reload();
+            } else {
+                localStorage.removeItem('reload');
+            }
+        }
+    })();
+</script>
+</head>
+
+<body>
