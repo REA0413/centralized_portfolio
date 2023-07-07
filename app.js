@@ -1,8 +1,15 @@
 //jshint esversion:6
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const date = require(__dirname + "/date.js");
+const path = require('path')
+
+// const myModal = document.getElementById('myModal')
+// const myInput = document.getElementById('myInput')
+
+// myModal.addEventListener('shown.bs.modal', () => {
+//   myInput.focus()
+// })
 
 const app = express();
 const mongoose = require('mongoose');
@@ -27,6 +34,7 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
+// app.use("/styles/css", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
 
 const items = [];
 const workItems = [];
@@ -51,34 +59,36 @@ const customSchema = new mongoose.Schema({
 });
 const List = mongoose.model('List', customSchema);
 
-app.get("/:requiredPage", function(req,res){
-  const destination = _.capitalize(req.params.requiredPage);
-  console.log(destination);
-  if (destination === "Favicon.ico") return;
-  List.findOne({name: destination})
-  .then(function(foundList){
-    if(!foundList){
-      const list = new List({
-        name: destination,
-        items: defaultItems
-      })
-      list.save();
-      res.redirect("/" + destination);
-      console.log("Successfully added a new list into the collection!");
-      // const day = date.getDate();
-      // res.render("list", {listTitle: day, newListItems: list.items});
-      
-    } else{
-      console.log("List exists in the collections");
-      const day = date.getDate();
+// Get A Page with a param
 
-      res.render("list", {listTitle: day, newListItems: foundList.items, foo: foundList.name});
-    }
-    })
-  .catch(function(err){
-  console.log(err);
-  });
-})
+// app.get("/:requiredPage", function(req,res){
+//   const destination = _.capitalize(req.params.requiredPage);
+//   console.log(destination);
+//   if (destination === "Favicon.ico") return;
+//   List.findOne({name: destination})
+//   .then(function(foundList){
+//     if(!foundList){
+//       const list = new List({
+//         name: destination,
+//         items: defaultItems
+//       })
+//       list.save();
+//       res.redirect("/" + destination);
+//       console.log("Successfully added a new list into the collection!");
+//       // const day = date.getDate();
+//       // res.render("list", {listTitle: day, newListItems: list.items});
+      
+//     } else{
+//       console.log("List exists in the collections");
+//       const day = date.getDate();
+
+//       res.render("list", {listTitle: day, newListItems: foundList.items, foo: foundList.name});
+//     }
+//     })
+//   .catch(function(err){
+//   console.log(err);
+//   });
+// })
 
 app.get("/", function(req, res) {
 
@@ -97,7 +107,8 @@ Item.find({})
   } else {
     const day = date.getDate();
 
-    res.render("list", {listTitle: day, newListItems: foundItems, foo: "Sample"});
+    res.render("landingpage");
+    // res.render("list", {listTitle: day, newListItems: foundItems, foo: "Sample"});
   }
   
 })
@@ -173,6 +184,61 @@ app.post("/delete", function(req, res){
 //   res.render("list", {listTitle: "Work List", newListItems: workItems});
 // });
 
+app.get("/potentialproduct", function(req, res) {
+
+  Item.find({})
+  .then(function(foundItems){
+    if(foundItems.length === 0){
+      Item.insertMany(defaultItems)
+      .then(function(){
+        console.log("Succesfully added new items");
+      })
+      .catch(function(err){
+        console.log(err);
+      });
+      console.log(foundItems);
+      res.redirect("/");
+    } else {
+      const day = date.getDate();
+  
+      res.render("potentialproduct");
+      // res.render("list", {listTitle: day, newListItems: foundItems, foo: "Sample"});
+    }
+    
+  })
+  .catch(function(err){
+    console.log(err);
+  });
+  
+  });
+
+app.get("/airlineperspective", function(req, res) {
+
+  Item.find({})
+  .then(function(foundItems){
+    if(foundItems.length === 0){
+      Item.insertMany(defaultItems)
+      .then(function(){
+        console.log("Succesfully added new items");
+      })
+      .catch(function(err){
+        console.log(err);
+      });
+      console.log(foundItems);
+      res.redirect("/");
+    } else {
+      const day = date.getDate();
+  
+      res.render("airlineperspective");
+      // res.render("list", {listTitle: day, newListItems: foundItems, foo: "Sample"});
+    }
+    
+  })
+  .catch(function(err){
+    console.log(err);
+  });
+    
+    });
 
 app.get("/about", function(req, res){
   res.render("about");
