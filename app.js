@@ -11,7 +11,7 @@ var _ = require('lodash');
 // main().catch(err => console.log(err));
 
 // async function main() {
-//   await mongoose.connect('mongodb+srv://admin-rea:Test123@cluster0.a0g4oqq.mongodb.net/todolistDB', {useNewUrlParser: true});
+//   await mongoose.connect('ceklaptopcoba', {useNewUrlParser: true});
 // };
 
 // const itemsSchema = new mongoose.Schema({
