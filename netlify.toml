@@ -1,10 +1,6 @@
 # example netlify.toml
 [build]
-<<<<<<< HEAD
   command = "npm build run"
-=======
-  command = "npm run build"
->>>>>>> 79348ebc0dc2ffd9e50d75fe538851faf8076806
   functions = "netlify/functions/api.js"
   publish = ""
 
